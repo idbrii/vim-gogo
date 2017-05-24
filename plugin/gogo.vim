@@ -12,7 +12,7 @@ if has("win32")
             let fname = substitute(fnamemodify(a:filename, ':p'), '/', '\\', 'g')
             exec '! start '. fname
         endfunction
-        command! -nargs=1 -complete=file Gogo call s:Gogo("<args>")
+        command! -nargs=1 -complete=file Gogo silent call s:Gogo("<args>")
     else
         command! -nargs=1 -complete=file Gogo ! start <args>
     endif
