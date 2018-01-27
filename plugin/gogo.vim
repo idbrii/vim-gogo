@@ -7,8 +7,8 @@ let loaded_gogo = 1
 if has("win32")
     function! s:Gogo(filename)
         let fname = fnamemodify(a:filename, ':p')
-        " Forwardslashes are great, but cmd.exe won't handle them. Convert to
-        " backslash.
+        " Forwardslashes are great, but old versions of cmd.exe won't handle
+        " them. Convert to backslash.
         if &shellslash
             let fname = substitute(fname, '/', '\\', 'g')
         endif
