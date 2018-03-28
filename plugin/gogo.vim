@@ -14,12 +14,16 @@ if has("win32")
         endif
         exec '! start "" "'. fname .'"'
     endfunction
-    command! -nargs=1 -complete=file Gogo silent call s:Gogo("<args>")
+    command! -nargs=1 Gogo silent call s:Gogo("<args>")
 elseif has("macunix")
     " TODO: Does this work as expected? Does it need q-quoting?
-    command! -nargs=1 -complete=file Gogo ! open <args>
+    command! -nargs=1 Gogo ! open <args>
 elseif has("unix")
     " TODO: Does this work as expected? Does it need q-quoting?
-    command! -nargs=1 -complete=file Gogo ! xdg-open <args>
+    command! -nargs=1 Gogo ! xdg-open <args>
 endif
+
+" Separate command with completion so vim doesn't try to force Gogo commands
+" to be a file. (Fails on E480 on urls containing '?'.)
+command! -nargs=1 -complete=file GogoFile Gogo <args>
 
