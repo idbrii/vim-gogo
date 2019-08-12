@@ -6,7 +6,7 @@ let loaded_gogo = 1
 " Quickly launch input data
 if has("win32")
     function! s:Gogo(filename)
-        let fname = fnamemodify(a:filename, ':p')
+        let fname = fnamemodify(expand(a:filename), ':p')
         " Forwardslashes are great, but old versions of cmd.exe won't handle
         " them. Convert to backslash.
         if &shellslash
