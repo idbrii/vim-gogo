@@ -6,7 +6,12 @@ let loaded_gogo = 1
 " Quickly launch input data
 if has("win32")
     function! s:Gogo(filename)
-        let fname = fnamemodify(expand(a:filename), ':p')
+        let fname = expand(a:filename)
+        if len(fname) == 0 || match(fname, "://") > 0
+            " Was a url or something else not expandable.
+            let fname = a:filename
+        endif
+        let fname = fnamemodify(fname, ':p')
         " Forwardslashes are great, but old versions of cmd.exe won't handle
         " them. Convert to backslash.
         if &shellslash
