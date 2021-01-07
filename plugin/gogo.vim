@@ -17,6 +17,9 @@ if has("win32")
         if &shellslash
             let fname = substitute(fname, '/', '\\', 'g')
         endif
+        " ! will expand #/% to filenames, but we already tried expanding
+        " above. We might have a url with #, so escape to prevent expansion.
+        let fname = escape(fname, '#%')
         exec '! start "" "'. fname .'"'
     endfunction
     command! -nargs=1 Gogo silent call s:Gogo("<args>")
