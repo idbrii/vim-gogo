@@ -9,6 +9,8 @@ CYGWIN*)
     alias gogo='cygstart'
     ;;
 Linux)
+    # Even under WSL, this opens webpages in your browser and folders in
+    # Windows Explorer.
     alias gogo='xdg-open'
     ;;
 Darwin)
