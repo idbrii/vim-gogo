@@ -6,10 +6,16 @@ let loaded_gogo = 1
 " Quickly launch input data
 if has("win32")
     function! s:Gogo(filename)
-        let fname = expand(a:filename)
+        let fname = a:filename
+        if fname[0] =~# "^[\"']"
+            " String is quoted - remove it.
+            let fname = fname[1:-2]
+        endif
+        let fname_clean = fname
+        let fname = expand(fname)
         if len(fname) == 0 || match(fname, "://") > 0
             " Was a url or something else not expandable.
-            let fname = a:filename
+            let fname = fname_clean
         endif
         let fname = fnamemodify(fname, ':p')
         " Forwardslashes are great, but old versions of cmd.exe won't handle
@@ -20,9 +26,9 @@ if has("win32")
         " ! will expand #/% to filenames, but we already tried expanding
         " above. We might have a url with #, so escape to prevent expansion.
         let fname = escape(fname, '#%')
-        exec '! start "" "'. fname .'"'
+        exec '! start "" "'.. fname ..'"'
     endfunction
-    command! -nargs=1 Gogo silent call s:Gogo("<args>")
+    command! -nargs=1 Gogo silent call s:Gogo(<q-args>)
 elseif has("macunix")
     " TODO: Does this work as expected? Does it need q-quoting?
     command! -nargs=1 Gogo ! open <args>
