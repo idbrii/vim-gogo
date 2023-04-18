@@ -26,7 +26,9 @@ if has("win32")
         " ! will expand #/% to filenames, but we already tried expanding
         " above. We might have a url with #, so escape to prevent expansion.
         let fname = escape(fname, '#%')
-        exec '! start "" "'.. fname ..'"'
+        " Don't add a title. vim9.0.1425 on Win10 barfs on it with "Command
+        " not found" even though the docs allow it.
+        exec '! start "'.. fname ..'"'
     endfunction
     command! -nargs=1 Gogo silent call s:Gogo(<q-args>)
 elseif has("macunix")
